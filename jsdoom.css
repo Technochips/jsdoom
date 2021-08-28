@@ -1,0 +1,18 @@
+*
+{
+	font-family: sans-serif;
+}
+body
+{
+	background-color: #333;
+	color: #ccc;
+}
+body#jsdoom-body
+{
+	background-color: #000;
+	margin: 0;
+}
+iframe
+{
+	border: none;
+}
