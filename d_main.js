@@ -196,7 +196,7 @@ function D_DoomMain()
 	console.log("M_LoadDefaults: Load system defaults.");
 	M_LoadDefaults();
 
-	console.log("Z_Init: Init zone memory allocation daemon. "); // false. this also does not exist, this must be coded in in order to have the true dos experience
+	console.log("Z_Init: Init zone memory allocation daemon. "); // false. this also does not exist, but this must be coded in in order to have the true dos experience
 	
 	console.log("M_LoadDefaults: Load system defaults.");
 
@@ -249,4 +249,10 @@ function D_DoomMain()
 			// Ouch.
 			break;
 	}
+
+	console.log("M_Init: Init miscellaneous info.");
+	M_Init();
+
+	console.log("R_Init: Init DOOM refresh daemon - ")
+	R_Init();
 }

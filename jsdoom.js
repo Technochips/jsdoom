@@ -69,4 +69,68 @@ function CorrectInt32Endianness(value, endian)
 	return r;
 }
 
+function GetUint8(buffer, position)
+{
+	return new Uint8Array(buffer, position, 1)[0];
+}
+function GetInt8(buffer, position)
+{
+	return new Int8Array(buffer, position, 1)[0];
+}
+
+function GetUint16(buffer, position, endian)
+{
+	try
+	{
+		return CorrectUint16Endianness(new Uint16Array(buffer, position, 1)[0], endian);
+	}
+	catch(e)
+	{
+		return CorrectUint16Endianness(new Uint16Array(buffer.slice(position, position+2), 0, 1)[0], endian);
+	}
+}
+function GetInt16(buffer, position, endian)
+{
+	try
+	{
+		return CorrectInt16Endianness(new Int16Array(buffer, position, 1)[0], endian);
+	}
+	catch(e)
+	{
+		return CorrectInt16Endianness(new Int16Array(buffer.slice(position, position+2), 0, 1)[0], endian);
+	}
+}
+
+function GetUint32(buffer, position, endian)
+{
+	try
+	{
+		return CorrectUint16Endianness(new Uint32Array(buffer, position, 1)[0], endian);
+	}
+	catch(e)
+	{
+		return CorrectUint16Endianness(new Uint32Array(buffer.slice(position, position+4), 0, 1)[0], endian);
+	}
+}
+function GetInt32(buffer, position, endian)
+{
+	try
+	{
+		return CorrectInt16Endianness(new Int32Array(buffer, position, 1)[0], endian);
+	}
+	catch(e)
+	{
+		return CorrectInt16Endianness(new Int32Array(buffer.slice(position, position+4), 0, 1)[0], endian);
+	}
+}
+
+function GetUint8Array(buffer, position, length)
+{
+	return new Uint8Array(buffer, position, length);
+}
+function GetString(buffer, position, length)
+{
+	return decoder.decode(GetUint8Array(buffer, position, length)).replace(/\0.*$/g,'');
+}
+
 D_DoomMain();

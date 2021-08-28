@@ -1,6 +1,7 @@
-var numlumps
-var lumpinfo
-var allfiles
+var numlumps;
+var lumpinfo;
+var allfiles;
+var lumpcache = [];
 
 function ExtractFileBase(filename)
 {
@@ -39,7 +40,6 @@ function W_AddFile(filename, iswad)
 		lump.position = 0;
 		lump.handle = currentHandle;
 		lump.size = request.response.length;
-		lump.content = new Uint8Array(allfiles[currentHandle]);
 		lump.name = ExtractFileBase(filename);
 
 		lumpinfo.push(lump);
@@ -56,10 +56,8 @@ function W_AddFile(filename, iswad)
 			I_Error("Wad file " + filename + " doesn't have IWAD or PWAD id");
 		}
 	}
-	let header = new Int32Array(buffer, 4, 2);
-	
-	let hnumlumps = CorrectInt32Endianness(header[0], "little");
-	let hinfotableofs = CorrectInt32Endianness(header[1], "little");
+	let hnumlumps = GetInt32(buffer, 4, "little");
+	let hinfotableofs = GetInt32(buffer, 8, "little");
 	numlumps += hnumlumps
 	
 	for(let i = 0; i < hnumlumps; i++)
@@ -67,12 +65,9 @@ function W_AddFile(filename, iswad)
 		var lump_p = {};
 		lump_p.handle = currentHandle;
 
-		let infotable = new Int32Array(buffer, hinfotableofs, 2);
-
-		lump_p.position = CorrectInt32Endianness(infotable[0], "little");
-		lump_p.size = CorrectInt32Endianness(infotable[1], "little");
-		lump_p.name = decoder.decode(new Uint8Array(buffer, hinfotableofs + 8, 8)).replace(/\0.*$/g,'');
-		lump_p.content = new Uint8Array(buffer, lump_p.position, lump_p.size);
+		lump_p.position = GetInt32(buffer, hinfotableofs, "little");
+		lump_p.size = GetInt32(buffer, hinfotableofs + 4, "little");
+		lump_p.name = decoder.decode(GetUint8Array(buffer, hinfotableofs + 8, 8)).replace(/\0.*$/g,'');
 
 		hinfotableofs += 16;
 		lumpinfo.push(lump_p);
@@ -98,7 +93,7 @@ function W_InitMultipleFiles(filenames, iswadfiles)
 
 function W_CheckNumForName(name)
 {
-	for(let i = numlumps-1; i--; i >= 0)
+	for(let i = numlumps; i--; i >= 0)
 	{
 		if(lumpinfo[i].name == name.toUpperCase()) return i;
 	}
@@ -113,4 +108,22 @@ function W_GetNumForName(name)
 		I_Error("W_GetNumForName: " + name + " not found!");
 
 	return i
+}
+
+function W_CacheLumpNum(lump)
+{
+	if(lump >= numlumps)
+		I_Error("W_CacheLumpNum: " + lump + " >= numlumps");
+	
+	if(!lumpcache[lump])
+	{
+		lumpcache[lump] = allfiles[lumpinfo[lump].handle].slice(lumpinfo[lump].position, lumpinfo[lump].position+lumpinfo[lump].size);
+	}
+	
+	return lumpcache[lump];
+}
+
+function W_CacheLumpName(name)
+{
+	return W_CacheLumpNum(W_GetNumForName(name));
 }

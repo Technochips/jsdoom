@@ -1,0 +1,2 @@
+const FRACBITS = 16
+const FRACUNIT = (1<<FRACBITS)
