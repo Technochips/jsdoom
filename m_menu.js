@@ -4,11 +4,13 @@ var itemOn;
 var whichSkull;
 var skullAnimCounter;
 var screenSize;
-var screenblocks;
 var messageToPrint;
 var messageString;
 var messageLastMenuActive;
 var quickSaveSlot;
+
+var detailLevel;
+var screenblocks;
 
 function M_NewGame(choice) {};
 function M_Episode(choice) {};

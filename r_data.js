@@ -159,12 +159,6 @@ function R_InitTextures()
 	let temp2 = W_GetNumForName("S_END") - 1;
 	let temp3 = ((temp2-temp1+63)/64)|0 + ((numtextures+63)/64)|0; // |0 to get integer division
 
-	let s = "["; // what is the purpose of this???
-	for(let i = 0; i < temp3; i++)
-		s += " ";
-	s += "         ]";
-	console.log(s);
-
 	let directory = 0;
 	for(let i = 0; i < numtextures; i++, directory++)
 	{
