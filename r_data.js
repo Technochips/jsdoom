@@ -254,3 +254,37 @@ function R_InitData()
 	R_InitColormaps();
 	console.log("InitColormaps");
 }
+
+function R_FlatNumForName(name)
+{
+	let i = W_CheckNumForName(name)
+	
+	if(i == -1)
+	{
+		I_Error("R_FlatNumForName: " + name + " not found");
+	}
+
+	return i - firstflat;
+}
+
+function R_CheckTextureNumForName(name)
+{
+	if(name[0] == "-")
+		return 0;
+
+	for(let i = 0; i < numtextures; i++)
+		if(textures[i].name == name)
+			return i;
+
+	return -1;
+}
+
+function R_TextureNumForName(name)
+{
+	let i = R_CheckTextureNumForName(name);
+	if(i == -1)
+	{
+		I_Error("R_TextureNumForName: " + name + " not found");
+	}
+	return i;
+}

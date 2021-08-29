@@ -255,4 +255,7 @@ function D_DoomMain()
 
 	console.log("R_Init: Init DOOM refresh daemon - ")
 	R_Init();
+
+	console.log("P_Init: Init Playloop state.")
+	P_Init();
 }
