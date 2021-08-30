@@ -1,3 +1,8 @@
+function I_Init()
+{
+	I_InitSound();
+}
+
 function I_Error(error)
 {
 	alert(error);
