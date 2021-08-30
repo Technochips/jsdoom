@@ -261,4 +261,7 @@ function D_DoomMain()
 
 	console.log("I_Init: Setting up machine state.");
 	I_Init();
+
+	console.log("S_Init: Setting up sound.");
+	S_Init(snd_SfxVolume, snd_MusicVolume);
 }

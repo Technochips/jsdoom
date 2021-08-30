@@ -1,6 +1,15 @@
 
 class sfxinfo_t
 {
+	name = null;
+	singularity = 0;
+	priority = 0;
+	link = null;
+	pitch = 0;
+	volume = 0;
+	data = null;
+	usefulness = 0;
+	lumpnum = 0;
 	constructor(name, singularity, priority, link, pitch, volume, data, usefulness, lumpnum)
 	{
 		this.name = name;
@@ -17,6 +26,10 @@ class sfxinfo_t
 
 class musicinfo_t
 {
+	name = null;
+	lumpnum = 0;
+	data = null;
+	handle = 0;
 	constructor(name, lumpnum, data, handle)
 	{
 		this.name = name;

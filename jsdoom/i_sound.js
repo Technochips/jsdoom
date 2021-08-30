@@ -8,6 +8,10 @@ var audio_fd;
 
 var mixbuffer = [];
 
+var steptable = [];
+
+var vol_lookup = [];
+
 function getsfx(sfxname, lenarray, leni)
 {
 	let name = "ds" + sfxname;
@@ -29,6 +33,27 @@ function getsfx(sfxname, lenarray, leni)
 		paddedsfx[i] = sfx[i+8];
 	}
 	return paddedsfx.buffer;
+}
+
+function I_SetChannels()
+{
+	for(let i = -128; i < 128; i++)
+		steptable[i+128] = (Math.pow(2, i/64)*65536)|0;
+	
+	for(let i = 0; i < 128; i++)
+		for(let j = 0; j < 256; j++)
+			vol_lookup[i*256+j] = ((i*(j-128)*256)/127)|0;
+}
+
+function I_SetSfxVolume(volume)
+{
+	snd_SfxVolume = volume;
+}
+
+function I_SetMusicVolume(volume)
+{
+	snd_MusicVolume = volume;
+	// TODO: actually make it change music?
 }
 
 function I_InitSound()

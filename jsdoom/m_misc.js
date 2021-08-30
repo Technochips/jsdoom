@@ -24,7 +24,7 @@ var defaults =
 	new default_t("mouse_sensitivity", "mouseSensitivity", 5),
 	new default_t("sfx_volume", "snd_SfxVolume", 8),
 	new default_t("music_volume", "snd_MusicVolume", 8),
-	new default_t("show_messages", "snd_SfxVolume", true),
+	new default_t("show_messages", "showMessages", true),
 
 	new default_t("key_right", "key_right", KEY_RIGHTARROW),
 	new default_t("key_left", "key_left", KEY_LEFTARROW),
