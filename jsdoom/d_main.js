@@ -264,4 +264,7 @@ function D_DoomMain()
 
 	console.log("S_Init: Setting up sound.");
 	S_Init(snd_SfxVolume, snd_MusicVolume);
+
+	console.log("HU_Init: Setting up heads up display.");
+	HU_Init();
 }
