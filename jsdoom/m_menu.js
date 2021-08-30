@@ -12,6 +12,42 @@ var quickSaveSlot;
 var detailLevel;
 var screenblocks;
 
+class menuitem_t
+{
+	status;
+	name;
+	routine;
+	alphaKey;
+	constructor(status, name, routine, alphaKey)
+	{
+		this.status = status;
+		this.name = name;
+		this.routine = routine;
+		this.alphaKey = alphaKey;
+	}
+}
+
+class menu_t
+{
+	numitems;
+	prevMenu;
+	menuitems;
+	routine;
+	x;
+	y;
+	lastOn;
+	constructor(numitems, prevMenu, menuitems, routine, x, y, lastOn)
+	{
+		this.numitems = numitems;
+		this.prevMenu = prevMenu;
+		this.menuitems = menuitems;
+		this.routine = routine;
+		this.x = x;
+		this.y = y;
+		this.lastOn = lastOn;
+	}
+}
+
 function M_NewGame(choice) {};
 function M_Episode(choice) {};
 function M_ChooseSkill(choice) {};
@@ -61,23 +97,23 @@ const main_e =
 
 var MainMenu =
 [
-	[1, "M_NGAME", M_NewGame, "n"],
-	[1, "M_OPTION", M_Options, "o"],
-	[1, "M_LOADG", M_LoadGame, "l"],
-	[1, "M_SAVEG", M_SaveGame, "s"],
-	[1, "M_RDTHIS", M_ReadThis, "r"],
-	[1, "M_QUITG", M_QuitDOOM, "q"]
+	new menuitem_t(1, "M_NGAME", M_NewGame, "n"),
+	new menuitem_t(1, "M_OPTION", M_Options, "o"),
+	new menuitem_t(1, "M_LOADG", M_LoadGame, "l"),
+	new menuitem_t(1, "M_SAVEG", M_SaveGame, "s"),
+	new menuitem_t(1, "M_RDTHIS", M_ReadThis, "r"),
+	new menuitem_t(1, "M_QUITG", M_QuitDOOM, "q"),
 ];
 
-var MainDef =
-{
-	numitems: main_e.length,
-	prevmenu: null,
-	mmenuitems: MainMenu,
-	routine: M_DrawMainMenu,
-	x:97, y: 64,
-	lastOn: 0
-};
+var MainDef = new menu_t
+(
+	main_e.length,
+	null,
+	MainMenu,
+	M_DrawMainMenu,
+	97, 64,
+	0
+);
 
 const episodes_e =
 {
@@ -89,21 +125,21 @@ const episodes_e =
 
 var EpisodeMenu =
 [
-	[1, "M_EPI1", M_Episode, "k"],
-	[1, "M_EPI2", M_Episode, "t"],
-	[1, "M_EPI3", M_Episode, "i"],
-	[1, "M_EPI4", M_Episode, "t"]
+	new menuitem_t(1, "M_EPI1", M_Episode, "k"),
+	new menuitem_t(1, "M_EPI2", M_Episode, "t"),
+	new menuitem_t(1, "M_EPI3", M_Episode, "i"),
+	new menuitem_t(1, "M_EPI4", M_Episode, "t"),
 ];
 
-var EpiDef =
-{
-	numitems: episodes_e.length,
-	prevMenu: MainDef,
-	menuitems: EpisodeMenu,
-	routine: M_DrawEpisode,
-	x: 48, y: 63,
-	lastOn: episodes_e.ep1
-};
+var EpiDef = new menu_t
+(
+	episodes_e.length,
+	MainDef,
+	EpisodeMenu,
+	M_DrawEpisode,
+	48, 63,
+	episodes_e.ep1
+);
 
 const newgame_e =
 {
@@ -116,22 +152,22 @@ const newgame_e =
 
 var NewGameMenu =
 [
-	[1, "M_JKILL", M_ChooseSkill, "i"],
-	[1, "M_ROUGH", M_ChooseSkill, "h"],
-	[1, "M_HURT", M_ChooseSkill, "h"],
-	[1, "M_ULTRA", M_ChooseSkill, "u"],
-	[1, "M_NMARE", M_ChooseSkill, "n"]
+	new menuitem_t(1, "M_JKILL", M_ChooseSkill, "i"),
+	new menuitem_t(1, "M_ROUGH", M_ChooseSkill, "h"),
+	new menuitem_t(1, "M_HURT", M_ChooseSkill, "h"),
+	new menuitem_t(1, "M_ULTRA", M_ChooseSkill, "u"),
+	new menuitem_t(1, "M_NMARE", M_ChooseSkill, "n"),
 ];
 
-var NewDef =
-{
-	numitems: newgame_e.length,
-	prevMenu: EpiDef,
-	menuitems: NewGameMenu,
-	routine: M_DrawNewGame,
-	x: 48, y: 63,
-	lastOn: newgame_e.hurtme
-};
+var NewDef = new menu_t
+(
+	newgame_e.length,
+	EpiDef,
+	NewGameMenu,
+	M_DrawNewGame,
+	48, 63,
+	newgame_e.hurtme
+);
 
 const options_e =
 {
@@ -148,25 +184,25 @@ const options_e =
 
 var OptionsMenu =
 [
-	[1, "M_ENDGAM", M_EndGame, "e"],
-	[1, "M_MESSG", M_ChangeMessages, "m"],
-	[1, "M_DETAIL", M_ChangeDetail, "g"],
-	[2, "M_SCRNSZ", M_SizeDisplay, "s"],
-	[-1, "", 0],
-	[2, "M_MSENS", M_ChangeSensitivity, "m"],
-	[-1, "", 0],
-	[1, "M_SVOL", M_Sound, "s"]
+	new menuitem_t(1, "M_ENDGAM", M_EndGame, "e"),
+	new menuitem_t(1, "M_MESSG", M_ChangeMessages, "m"),
+	new menuitem_t(1, "M_DETAIL", M_ChangeDetail, "g"),
+	new menuitem_t(2, "M_SCRNSZ", M_SizeDisplay, "s"),
+	new menuitem_t(-1, "", 0),
+	new menuitem_t(2, "M_MSENS", M_ChangeSensitivity, "m"),
+	new menuitem_t(-1, "", 0),
+	new menuitem_t(1, "M_SVOL", M_Sound, "s"),
 ];
 
-var OptionsDef =
-{
-	numitems: options_e.length,
-	prevMenu: MainDef,
-	menuitems: OptionsMenu,
-	routine: M_DrawOptions,
-	x: 60, y: 37,
-	lastOn: 0
-};
+var OptionsDef = new menu_t
+(
+	options_e.length,
+	MainDef,
+	OptionsMenu,
+	M_DrawOptions,
+	60, 37,
+	0
+);
 
 const read_e =
 {
@@ -175,18 +211,18 @@ const read_e =
 
 var ReadMenu1 =
 [
-	[1, "", M_FinishReadThis, 0]
+	new menuitem_t(1, "", M_FinishReadThis, 0),
 ];
 
-var ReadDef1 =
-{
-	numitems: read_e.length,
-	prevMenu: MainDef,
-	menuitems: ReadMenu1,
-	routine: M_DrawReadThis1,
-	x: 280, y: 185,
-	lastOn: 0
-};
+var ReadDef1 = new menu_t
+(
+	read_e.length,
+	MainDef,
+	ReadMenu1,
+	M_DrawReadThis1,
+	280, 185,
+	0
+);
 
 const read_e2 =
 {
@@ -195,18 +231,18 @@ const read_e2 =
 
 var ReadMenu2 =
 [
-	[1, "", M_FinishReadThis, 0]
+	new menuitem_t(1, "", M_FinishReadThis, 0),
 ];
 
-var ReadDef2 =
-{
-	numitems: read_e2.length,
-	prevMenu: ReadDef1,
-	menuitems: ReadMenu2,
-	routine: M_DrawReadThis2,
-	x: 330, y: 175,
-	lastOn: 0
-};
+var ReadDef2 = new menu_t
+(
+	read_e2.length,
+	ReadDef1,
+	ReadMenu2,
+	M_DrawReadThis2,
+	330, 175,
+	0
+);
 
 const sound_e =
 {
@@ -218,21 +254,21 @@ const sound_e =
 
 var SoundMenu =
 [
-	[2, "M_SFXVOl", M_SfxVol, "s"],
-	[-1, "", 0],
-	[2, "M_MUSVOl", M_MusicVol, "m"],
-	[-1, "", 0]
+	new menuitem_t(2, "M_SFXVOl", M_SfxVol, "s"),
+	new menuitem_t(-1, "", 0),
+	new menuitem_t(2, "M_MUSVOl", M_MusicVol, "m"),
+	new menuitem_t(-1, "", 0),
 ];
 
-var SoundDef =
-{
-	numitems: sound_e.length,
-	prevMenu: OptionsDef,
-	menuitems: SoundMenu,
-	routine: M_DrawSound,
-	x: 80, y: 64,
-	lastOn: 0
-};
+var SoundDef = new menu_t
+(
+	sound_e.length,
+	OptionsDef,
+	SoundMenu,
+	M_DrawSound,
+	80, 64,
+	0
+);
 
 const load_e =
 {
@@ -246,43 +282,43 @@ const load_e =
 
 var LoadMenu =
 [
-	[1, "", M_LoadSelect, "1"],
-	[1, "", M_LoadSelect, "2"],
-	[1, "", M_LoadSelect, "3"],
-	[1, "", M_LoadSelect, "4"],
-	[1, "", M_LoadSelect, "5"],
-	[1, "", M_LoadSelect, "6"]
+	new menuitem_t(1, "", M_LoadSelect, "1"),
+	new menuitem_t(1, "", M_LoadSelect, "2"),
+	new menuitem_t(1, "", M_LoadSelect, "3"),
+	new menuitem_t(1, "", M_LoadSelect, "4"),
+	new menuitem_t(1, "", M_LoadSelect, "5"),
+	new menuitem_t(1, "", M_LoadSelect, "6"),
 ];
 
-var LoadDef =
-{
-	numitems: load_e.length,
-	prevMenu: MainDef,
-	menuitems: LoadMenu,
-	routine: M_DrawLoad,
-	x: 80, y: 54,
-	lastOn: 0
-};
+var LoadDef = new menu_t
+(
+	load_e.length,
+	MainDef,
+	LoadMenu,
+	M_DrawLoad,
+	80, 54,
+	0
+);
 
 var SaveMenu =
 [
-	[1, "", M_SaveSelect, "1"],
-	[1, "", M_SaveSelect, "3"],
-	[1, "", M_SaveSelect, "4"],
-	[1, "", M_SaveSelect, "5"],
-	[1, "", M_SaveSelect, "2"],
-	[1, "", M_SaveSelect, "6"]
+	new menuitem_t(1, "", M_SaveSelect, "1"),
+	new menuitem_t(1, "", M_SaveSelect, "3"),
+	new menuitem_t(1, "", M_SaveSelect, "4"),
+	new menuitem_t(1, "", M_SaveSelect, "5"),
+	new menuitem_t(1, "", M_SaveSelect, "2"),
+	new menuitem_t(1, "", M_SaveSelect, "6"),
 ];
 
-var SaveDef =
-{
-	numitems: load_e.length,
-	prevMenu: MainDef,
-	menuitems: SaveMenu,
-	routine: M_DrawSave,
-	x: 80, y: 54,
-	lastOn: 0
-};
+var SaveDef = new menu_t
+(
+	load_e.length,
+	MainDef,
+	SaveMenu,
+	M_DrawSave,
+	80, 54,
+	0
+);
 
 function M_Init()
 {

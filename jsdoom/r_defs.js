@@ -1,18 +1,12 @@
 class spriteframe_t
 {
-	constructor()
-	{
-		this.rotate = false;
-		this.lump = [];
-		this.flip = [];
-	}
+	rotate = false;
+	lump = [];
+	flip = [];
 }
 
 class spritedef_t
 {
-	constructor()
-	{
-		this.numframes = 0;
-		this.spriteframes = [];
-	}
+	numframes = 0;
+	spriteframes = [];
 }

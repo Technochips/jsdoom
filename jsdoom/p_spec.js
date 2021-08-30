@@ -4,6 +4,9 @@ const BUTTONTIME = 35
 
 class switchlist_t
 {
+	name1 = null;
+	name2 = null;
+	episode = 0;
 	constructor(name1, name2, episode)
 	{
 		this.name1 = name1;
@@ -14,18 +17,19 @@ class switchlist_t
 
 class anim_t
 {
-	constructor()
-	{
-		this.istexture = false;
-		this.picnum = 0;
-		this.basepic = 0;
-		this.numpics = 0;
-		this.speed = 0;
-	}
+	istexture = false;
+	picnum = 0;
+	basepic = 0;
+	numpics = 0;
+	speed = 0;
 }
 
 class animdef_t
 {
+	istexture = false;
+	endname = null;
+	startname = null;
+	speed = 0;
 	constructor(istexture, endname, startname, speed)
 	{
 		this.istexture = istexture;

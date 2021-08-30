@@ -1,5 +1,10 @@
 class mappatch_t
 {
+	originx = 0;
+	originy = 0;
+	patch = 0;
+	stepdir = 0;
+	colormap = 0;
 	constructor(buffer, offset, patchlookup)
 	{
 		this.originx = GetInt16(buffer, offset, "little");
@@ -12,6 +17,12 @@ class mappatch_t
 
 class maptexture_t
 {
+	name = null;
+	masked = 0;
+	width = 0;
+	height = 0;
+	patchcount = 0;
+	patches = [];
 	constructor(buffer, offset, patchlookup)
 	{
 		this.name = GetString(buffer, offset, 8);
@@ -19,7 +30,6 @@ class maptexture_t
 		this.width = GetInt16(buffer, offset + 12, "little");
 		this.height = GetInt16(buffer, offset + 14, "little");
 		this.patchcount = GetInt16(buffer, offset + 20, "little");
-		this.patches = [];
 		for(let i = 0; i < this.patchcount; i++)
 		{
 			this.patches[i] = new mappatch_t(buffer, offset + 22 + (i * 10), patchlookup);
