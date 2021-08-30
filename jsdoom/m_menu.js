@@ -1,16 +1,30 @@
+var mouseSensitivity = 5;
+
+var showMessages = true;
+
+var detailLevel = 0;
+var screenblocks = 0;
+
+var screenSize;
+
+var quickSaveSlot;
+
+var messageToPrint;
+var messageString;
+
+var messx;
+var messy;
+var messageLastMenuActive;
+
+var mesageNeedsInput;
+
+var messageRoutine;
+
 var currentMenu;
 var menuactive;
 var itemOn;
 var whichSkull;
 var skullAnimCounter;
-var screenSize;
-var messageToPrint;
-var messageString;
-var messageLastMenuActive;
-var quickSaveSlot;
-
-var detailLevel;
-var screenblocks;
 
 class menuitem_t
 {
